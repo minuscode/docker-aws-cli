@@ -38,7 +38,10 @@ RUN apt-get install -y \
     python \
     python-pip \
     python-virtualenv \
-    vim
+    vim \
+    curl \
+    nodejs \
+    npm
 
 RUN adduser --disabled-login --gecos '' aws
 WORKDIR /home/aws
@@ -52,7 +55,13 @@ RUN \
     echo 'source $HOME/aws/env/bin/activate' >> .bashrc && \
     echo 'complete -C aws_completer aws' >> .bashrc
 
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash && \
+  echo "" >> ~/.bashrc && \
+  echo 'export PATH="$HOME/.yarn/bin:$PATH"' >> ~/.bashrc
+
 USER root
+
+RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 RUN mkdir examples
 ADD examples/etag.sh /home/aws/examples/etag.sh
