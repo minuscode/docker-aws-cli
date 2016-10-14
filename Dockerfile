@@ -43,6 +43,8 @@ RUN apt-get install -y \
     nodejs \
     npm
 
+RUN npm install --global gulp-cli
+
 RUN adduser --disabled-login --gecos '' aws
 WORKDIR /home/aws
 
